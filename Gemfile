@@ -38,6 +38,7 @@ group :development do
   gem 'spring'
 end
 
+gem 'sidekiq', '~> 6.1.3'
 gem 'rubocop', require: false
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
