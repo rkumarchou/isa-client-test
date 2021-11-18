@@ -5,7 +5,9 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      resources :queue_jobs, only: %i[index create]
+      resources :queue_jobs, only: %i[index create] do
+        post :worker, on: :member
+      end
     end
   end
 end

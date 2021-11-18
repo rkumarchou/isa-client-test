@@ -18,6 +18,17 @@ module Api
         end
       end
 
+      # POST api/v1/worker
+      def worker
+        queue_job = QueueJob.find_by_id(params[:id])
+        if queue_job && !queue_job.completed?
+          QueueJobWorker.perform_async(queue_job.id) 
+          render json: { data: Time.current }
+        else
+          render json: { error: queue_job.present? ? "Job already processed." : "Jon does't exist" }
+        end
+      end
+
       private
 
       def queue_job_params
