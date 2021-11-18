@@ -3,7 +3,8 @@ module Api
     class QueueJobsController < ApplicationController
       # GET api/v1/queue_jobs
       def index
-        queue_jobs = QueueJob.all.order(priority: :desc)
+        params[:page] = 1 unless params[:page].present?
+        queue_jobs = QueueJob.all.order(priority: :desc).paginate(page: params[:page])
         render json: { data: ActiveModelSerializers::SerializableResource.new(queue_jobs, each_serializer: QueueJobSerializer) }
       end
 
@@ -22,7 +23,7 @@ module Api
       def worker
         queue_job = QueueJob.find_by_id(params[:id])
         if queue_job && !queue_job.completed?
-          QueueJobWorker.perform_async(queue_job.id) 
+          QueueJobWorker.perform_async(queue_job.id)
           render json: { data: Time.current }
         else
           render json: { error: queue_job.present? ? "Job already processed." : "Jon does't exist" }
