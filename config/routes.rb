@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       post :sign_up, to: 'registrations#create'
 
       resources :queue_jobs, only: %i[index create] do
-        post :worker, on: :member
+        get :worker, on: :member
       end
     end
   end

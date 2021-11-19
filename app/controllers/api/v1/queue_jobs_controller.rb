@@ -19,7 +19,7 @@ module Api
         end
       end
 
-      # POST api/v1/worker
+      # GET api/v1/worker
       def worker
         queue_job = QueueJob.find_by_id(params[:id])
         if queue_job && !queue_job.completed?
