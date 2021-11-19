@@ -1,6 +1,8 @@
 module Api
   module V1
     class RegistrationsController < ApplicationController
+      skip_before_action :authenticate
+
       # POST api/v1/sign_up
       def create
         user = User.new(sign_up_params)

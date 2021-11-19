@@ -4,7 +4,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.7.0'
 
 gem 'active_model_serializers', '~> 0.10.0'
-
+gem 'blind_index'
+gem 'dotenv-rails'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
 # Use postgresql as the database for Active Record
@@ -41,6 +42,7 @@ group :development do
   gem 'spring'
 end
 
+gem 'lockbox'
 gem 'rubocop', require: false
 gem 'sidekiq', '~> 6.1.3'
 
