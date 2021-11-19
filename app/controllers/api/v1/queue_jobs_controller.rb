@@ -26,7 +26,7 @@ module Api
           QueueJobWorker.perform_async(queue_job.id)
           render json: { data: Time.current }
         else
-          render json: { error: queue_job.present? ? "Job already processed." : "Jon does't exist" }
+          render json: { error: queue_job.present? ? "Job already processed." : "Job does't exist" }
         end
       end
 
