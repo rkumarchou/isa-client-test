@@ -10,7 +10,7 @@ namespace :queue_job do
     queue_job = QueueJob.find_by_id args[:job_id]
     return unless queue_job && !queue_job.completed?
 
-    Movie.create(title: Movie.random_title) if queue_job.update_column(:status, "completed")
+    Movie.run if queue_job.update_column(:status, "completed")
     puts ActiveModelSerializers::SerializableResource.new(queue_job, serializer: QueueJobSerializer).to_json
   end
 end

@@ -8,6 +8,6 @@ class QueueJobWorker
 
     queue_job.update_column(:status, 'in_progress')
     sleep 5
-    Movie.create(title: Movie.random_title) if queue_job.update_column(:status, 'completed')
+    Movie.run if queue_job.update_column(:status, 'completed')
   end
 end
