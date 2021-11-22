@@ -19,14 +19,14 @@ module Api
         end
       end
 
-      # GET api/v1/worker
-      def worker
-        queue_job = QueueJob.find_by_id(params[:id])
-        if queue_job && !queue_job.completed?
-          QueueJobWorker.perform_async(queue_job.id)
+      # GET api/v1/schedule_workers
+      # Query Params job_ids = 1,2,3
+      def schedule_workers
+        if params[:job_ids].present?
+          QueueJobWorker.perform_async(params[:job_ids].split(','))
           render json: { data: Time.current }
         else
-          render json: { error: queue_job.present? ? "Job already processed." : "Job does't exist" }
+          render json: { error: "Please provide valid job_ids" }
         end
       end
 

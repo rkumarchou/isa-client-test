@@ -2,12 +2,13 @@ class QueueJobWorker
   include Sidekiq::Worker
   sidekiq_options retry: false
 
-  def perform(job_id)
-    queue_job = QueueJob.find_by_id(job_id)
-    return unless queue_job && !queue_job.completed?
+  def perform(job_ids)
+    queue_jobs = QueueJob.where(id: job_ids, status: 'waiting')
+    waiting_ids = queue_jobs.pluck(:id)
+    queue_jobs.update_all(status: 'in_progress')
 
-    queue_job.update_column(:status, 'in_progress')
-    sleep 5
-    Movie.run if queue_job.update_column(:status, 'completed')
+    QueueJob.where(id: waiting_ids).order(priority: :desc).each do |job| 
+      Movie.run if job.update_column(:status, 'completed')
+    end
   end
 end

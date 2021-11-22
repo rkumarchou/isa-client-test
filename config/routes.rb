@@ -8,9 +8,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       post :sign_up, to: 'registrations#create'
 
-      resources :queue_jobs, only: %i[index create] do
-        get :worker, on: :member
-      end
+      resources :queue_jobs, only: %i[index create]
+      get :schedule_workers, to: "queue_jobs#schedule_workers"
     end
   end
 end
