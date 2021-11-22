@@ -3,8 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Movie, type: :model do
- describe '#run' do
-   
+  describe '#run' do
     context 'when #run' do
       it 'is create movie' do
         Movie.run

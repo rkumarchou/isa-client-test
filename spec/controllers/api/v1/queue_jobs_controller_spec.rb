@@ -14,4 +14,4 @@ describe Api::V1::QueueJobsController do
     end
   end
 end
-#To do other scenario i.e listing jobs with authentication.
+# To do other scenario i.e listing jobs with authentication.
